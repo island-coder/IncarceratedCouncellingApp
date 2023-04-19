@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+<h1>Edit your Profile</h1>
+<form action="{{ url_for('professional.edit_profile') }}" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group mt-3 mb-3">
+        {{ form.first_name.label }}<br>
+        {{ form.first_name(class="form-control") }}
+        {% for error in form.first_name.errors %}
+        <span style="text-danger">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group mb-3">
+        {{ form.last_name.label }}<br>
+        {{ form.last_name(class="form-control") }}
+        {% for error in form.last_name.errors %}
+        <span style="text-danger">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+        <div class="form-group mb-3">
+        {{ form.address.label }}<br>
+        {{ form.address(class="form-control") }}
+        {% for error in form.address.errors %}
+        <span style="text-danger">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group mb-3">
+        {{ form.bio.label }}<br>
+        {{ form.bio(class="form-control") }}
+        {% for error in form.bio.errors %}
+        <span style="text-danger">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group mb-3">
+        {{ form.speciality.label }}<br>
+        {{ form.speciality(class="form-control") }}
+        {% for error in form.speciality.errors %}
+        <span style="text-danger">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{% endblock %}

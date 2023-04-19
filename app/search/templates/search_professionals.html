@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-5 mb-5 py-3">
+        <form method="GET" action="{{ url_for('search.search_professionals') }}">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="speciality" placeholder="Speciality">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mb-3">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        {% if results %}
+        <div class="row">
+            {% for result in results %}
+            <div class="col-sm-3">
+                <div class="card h-100 shadow">
+                    <img src="https://i.pravatar.cc/300?img={{result.id+5}}" class="card-img-top" alt="{{ result.first_name }} {{ result.last_name }}">
+                    <div class="card-body">
+                        <a href="{{url_for('professional.profile_public',user_id=result.id)}}"> <h5 class="card-title">{{ result.first_name }} {{ result.last_name }}</h5> </a>
+                        <p class="card-text"><small class="text-muted">{{ result.speciality }}</small></p>
+                        <p class="card-text"><small class="text-muted">{{ result.address }}</small></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-2 py-3 style=" max-width:800px">
+<!--<h1 class="text-center">Join today</h1>-->
+<div class="d-md-flex">
+
+    <div class="container mt-5 d-flex justify-content-center ">
+        <div class="card  text-center d-flex-sm justify-content-center  " style="width: 18rem">
+            <img src="{{url_for('static', filename='/images/signup/join_patient.jpg')}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="text-center">Join us as an Incarcerated Patient</h5>
+                <a href="{{ url_for('signup.signup_inmate') }}" class="btn btn-primary">Patient Signup</a>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5 d-flex justify-content-center ">
+
+        <div class="card text-center d-flex-sm justify-content-center   " style="width: 18rem;">
+            <img src="{{url_for('static', filename='/images/signup/join_professional.jpg')}}"class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="text-center">Join us as a Professional Service Provider</h5>
+                <a href="{{url_for('signup.signup_professional')}}" class="btn btn-primary">Professional Signup</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

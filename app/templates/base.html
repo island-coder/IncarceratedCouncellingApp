@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="https://kit.fontawesome.com/5588ed8f88.js" crossorigin="anonymous"></script>
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>CounceConnect</title>
+    {% endif %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/nucleo-svg.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary shadow ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">CounceConnect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a {% if request.path== url_for('index')%}
+                    class="nav-link active"
+                    {% else %} class="nav-link"
+                    {% endif %}
+                    aria-current="page" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a {% if request.path== url_for('search.search_professionals')%}
+                    class="nav-link active"
+                    {% else %} class="nav-link"
+                    {% endif %}
+                    aria-current="page" href="{{ url_for('search.search_professionals') }}">Search for a
+                    Professional</a>
+                </li>
+                {% if not current_user.is_authenticated %}
+                <li class="nav-item ">
+                    <a {% if request.path== url_for('signup.signup')%}
+                    class="nav-link active"
+                    {% else %} class="nav-link"
+                    {% endif %}
+                    aria-current="page" href="{{ url_for('signup.signup') }}">Join Us</a>
+
+
+                </li>
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>-->
+                <!--                </li>-->
+                {% else %}
+                <li class="nav-item">
+                    <a
+                            {% if request.path== url_for('patient.profile') or request.path ==
+                    url_for('professional.profile') %}
+                    class="nav-link active"
+                    {% else %} class="nav-link"
+                    {% endif %}
+                    aria-current="page"
+                    {% if current_user.user_type== 'inmate' %}
+                    href="{{url_for('patient.profile')}}"
+                    {% else %}
+                    href="{{url_for('professional.profile')}}"
+                    {% endif %}
+                    >My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% if current_user.is_authenticated %}
+            <span class="navbar-text">
+                            {{current_user.first_name}} {{current_user.last_name}}
+            </span>
+            {% else %}
+            <span>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
+                     </li>
+                </ul>
+            </span>
+            {% endif %}
+
+
+            <!--            <form class="d-flex" role="search">-->
+            <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--                <button class="btn btn-outline-success" type="submit">Search</button>-->
+            <!--            </form>-->
+        </div>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-dismissible alert-warning" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    {% for message in messages %}
+    <p class="display-8 mb-0 text-center">{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+
+<footer class="bg-dark text-light pt-4 text-center">
+    <div class="container my-3 py-3 text-center" style="max-width:1000px">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>CounceConnect is a groundbreaking online platform that connects incarcerated individuals with licensed mental health professionals.  </p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled mx-auto">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <address>
+                    <strong>CounceConnect</strong><br>
+                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                </address>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#"><i class="fab fa-twitter fa-2x px-2"></i></a>
+                    <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-primary py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2023 My Company, Inc. All rights reserved. <a class="float-end text-secondary" href="#">Back to top</a> </p>
+
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<!--<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"-->
+<!--        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"-->
+<!--        crossorigin="anonymous"></script>-->
+
+</body>
+
+
+</html>

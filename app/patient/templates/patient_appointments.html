@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container my-5 py-3">
+    <h1>My Appointments Schedule</h1>
+    {% if patient.appointments.first() != None %}
+    {% for appointment in patient.appointments %}
+    <div class="card my-3">
+        <div class="card-body">
+            <span>
+            <i class="fa-regular fa-calendar-days"></i>
+            {{appointment.timestamp.strftime('%d %B %Y')}}
+            <i class="fa-regular fa-clock"></i>
+            {{appointment.timestamp.strftime('%H:%M %p')}}
+            </span>
+            <br>
+            <span>
+                <i class="fa-solid fa-hospital-user"></i>
+                {{appointment.consulting_professional.first_name}} {{appointment.consulting_professional.last_name}}
+            </span>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 class="text-muted">You don't have any appointments booked with any professional</h4>
+    {% endif %}
+
+</div>
+
+{% endblock %}

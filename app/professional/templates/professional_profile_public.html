@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5 py-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ professional.first_name}} {{professional.last_name }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="https://i.pravatar.cc/150?img={{professional.id+5}}" class="img-fluid rounded-circle mb-3"
+                                 alt="{{ professional.name }} Avatar">
+                            <p class="card-text"><strong>Email:</strong> {{ professional.email }}</p>
+                            <p class="card-text"><strong>Address:</strong> {{ professional.address }}</p>
+<!--                            <a href="{{url_for('professional.edit_profile')}}" class="btn btn-link">Edit Profile</a>-->
+                        </div>
+                        <div class="col-md-6">
+                            <p class="card-text"><strong>Bio:</strong></p>
+                            <p class="card-text">{{ professional.bio }}</p>
+                     <p class="card-text"><strong>Specialities :</strong></p>
+                            <p class="card-text">{{ professional.speciality }}</p>
+                            <p class="card-text"><strong>What patients have to say...</strong></p>
+                            <figure>
+                                <blockquote class="blockquote fs-6">
+                                    <p>"I highly recommend this mental health professional. They
+                                        provided me with invaluable support and guidance during a difficult time. Their
+                                        expertise and compassion helped me to better understand and manage my mental
+                                        health. Thank you!".</p>
+                                </blockquote>
+                                <figcaption class="blockquote-footer fs-6">
+                                    Peter Shinders
+                                </figcaption>
+                            </figure>
+                            <a href="{{url_for('professional.professional_appointments',user_id=professional.id)}}" class="btn btn-primary">Schedule Now</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

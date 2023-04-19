@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container my-5 py-3">
+    <h1>Appointments Schedules</h1>
+    {% if current_user==professional %}
+    <a href="{{url_for('professional.create_appointment',user_id=professional.id)}}" class="btn btn-primary">Create
+        Appointments</a>
+    {% endif %}
+
+    {% if professional.appointments.first() != None %}
+    {% for appointment in professional.appointments %}
+    <div class="card my-3">
+        <div class="card-body">
+            <span>
+            <i class="fa-regular fa-calendar-days"></i>
+            {{appointment.timestamp.strftime('%d %B %Y')}}
+            <i class="fa-regular fa-clock"></i>
+            {{appointment.timestamp.strftime('%H:%M %p')}}
+            </span>
+            {% if appointment.consulting_patient == None %}
+            <p class="card-text">Availability: <span class="text-success">Available</span></p>
+            {% if current_user!=professional %}
+            <a href="{{url_for('patient.book_patient_appointment',user_id=current_user.id,appointment_id=appointment.id)}}"
+               class="btn btn-primary">Book Now</a>
+            {% endif %}
+            {% else %}
+            <p class="card-text">Availability: <span class="text-danger">Not Available</span></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+            {% if current_user != professional%}
+                 <h4 class="text-muted my-3">Looks like this service provider is not available currently</h4>
+             {% endif %}
+    {% endif %}
+
+</div>
+
+{% endblock %}
